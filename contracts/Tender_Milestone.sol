@@ -122,8 +122,8 @@ contract Tender_Milestone {
         require(validBidder, "Selected address is not a valid bidder");
 
         require(
-            finalCost >= winnerEstimateCost,
-            "Final cost must be greater than or equal to the winner's estimated cost"
+            finalCost <= winnerEstimateCost,
+            "Final cost must be less than or equal to the winner's estimated cost"
         );
         // Assign winner and costs
         tenders[tenderId].winner = winnerAddress;
