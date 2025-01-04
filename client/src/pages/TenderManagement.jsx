@@ -36,7 +36,9 @@ function TenderManagement() {
 
 
     // const contractAddress = '0x5D7c7167deE64C76CBff3825bcCD417B99B6c8e4'; // Replace with your deployed contract address
-    const contractAddress = '0xDF58aaFEc63F72E3133E81fa77b72470D5f76506'; // Replace with your deployed contract address
+    // const contractAddress = '0xDF58aaFEc63F72E3133E81fa77b72470D5f76506'; // Replace with your deployed contract address
+
+    const contractAddress = '0x9b02ecDa729Ce39635682a882355Bb74E0cc375f'; // Replace with your deployed contract address
     const governmentOfficial = "0x7CbF50988586a13463E1f93B5d5F8bc523F49d10";
     const bidder1 = "0xb7d489b00a12dd2e4dd210dd77c7419c78215443";
     const public1 = "0x14758BD24d28D608E72038Ec49D24441dDeF418F";

@@ -1,6 +1,7 @@
 //--------------------------
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
 import { useSearchParams } from 'react-router-dom';
 import Tender from '../contractJson/Tender_Milestone.json';
@@ -17,6 +18,8 @@ function MilestoneManagement() {
   // Basic states
   const [account, setAccount] = useState(null);
   const [contract, setContract] = useState(null);
+
+  const navigate = useNavigate();
 
   // We'll store tender data (including the real on-chain winner)
   const [tenderData, setTenderData] = useState({
@@ -40,7 +43,8 @@ function MilestoneManagement() {
   const [milestoneAmount, setMilestoneAmount] = useState(0);
 
   // Constants
-  const contractAddress = '0xDF58aaFEc63F72E3133E81fa77b72470D5f76506'; // Replace with your deployed contract address
+  // const contractAddress = '0xDF58aaFEc63F72E3133E81fa77b72470D5f76506'; // Replace with your deployed contract address
+  const contractAddress = '0x9b02ecDa729Ce39635682a882355Bb74E0cc375f'; // Replace with your deployed contract address
   const governmentOfficial = "0x7CbF50988586a13463E1f93B5d5F8bc523F49d10";
 
   // 1) On mount, set up contract & account
@@ -295,17 +299,36 @@ function MilestoneManagement() {
             <p><strong>Fund Requested:</strong> {ethers.formatUnits(m.fundRequested, 'wei')} wei</p>
             <p><strong>Approved?</strong> {m.isApproved ? 'Yes' : 'No'}</p>
 
+             {/* Government official can approve */}
             {account && account.toLowerCase() === governmentOfficial.toLowerCase() && !m.isApproved && (
               <button onClick={() => approveMilestone(idx)}>Approve</button>
             )}
+
+            {/* Non-winner / public can report an issue */}
+            {/** 
+              If NOT the real winner, show "Report Issue" button 
+              so user can file a complaint about this milestone 
+            **/}
+            {!isRealWinner && (
+              <button
+                onClick={() =>
+                  navigate(
+                    `/reportIssue?tenderId=${tenderId}&milestoneIndex=${idx}&address=${account}`
+                  )
+                }
+              >
+                Report Issue
+              </button>
+            )}
+
           </div>
         ))}
       </div>
 
-      <div style={{ marginTop: '1rem' }}>
+      {/* <div style={{ marginTop: '1rem' }}>
         <p>isWinner (from URL): {String(isWinnerQueryParam)}</p>
         <p>isRealWinner (on-chain check): {String(isRealWinner)}</p>
-      </div>
+      </div> */}
     </div>
   );
 }

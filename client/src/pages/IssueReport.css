@@ -1,0 +1,79 @@
+/* IssueReport.css */
+
+/* Container wrapping the entire page content */
+.issue-report-container {
+    max-width: 600px;        /* Limit the width for better readability */
+    margin: 2rem auto;       /* Center the container and add vertical spacing */
+    padding: 1.5rem;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Main heading at the top */
+  .issue-report-container h1 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  /* Sub-info lines (Tender ID, Reporter) */
+  .issue-report-container p {
+    margin: 0.5rem 0;
+    color: #555;
+  }
+  
+  /* The form styling */
+  .issue-report-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;          /* Spacing between elements */
+    margin-top: 1rem;
+  }
+  
+  /* Labels for description, file inputs */
+  .issue-report-container label {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #333;
+  }
+  
+  /* Textarea for short description */
+  .issue-report-container textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    resize: vertical;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  /* File input fields */
+  .issue-report-container input[type="file"] {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+  }
+  
+  /* Submit button styling */
+  .issue-report-container button[type="submit"] {
+    align-self: flex-start;
+    padding: 0.6rem 1.2rem;
+    background-color: #3498db;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    transition: background-color 0.2s ease;
+  }
+  
+  .issue-report-container button[type="submit"]:hover {
+    background-color: #2980b9;
+  }
+  

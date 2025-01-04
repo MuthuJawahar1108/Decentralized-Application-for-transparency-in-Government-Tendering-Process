@@ -27,10 +27,22 @@ contract Tender_Milestone {
         bool isApproved; // Whether the milestone is approved
     }
 
+    // Updated Issue struct to store two IPFS references
+    struct Issue {
+        address reporter;
+        string description; // A short text summary of the issue
+        string imageHash; // IPFS CID for the image
+        string docHash; // IPFS CID for the document
+        uint timestamp;
+    }
+
     uint public tenderCounter;
     mapping(uint => TenderDetails) public tenders;
     mapping(uint => Bid[]) public bids;
     mapping(uint => Milestone[]) public milestones; // Milestones for each tender
+
+    // milestoneIssues[tenderId][milestoneIndex] -> array of issues
+    mapping(uint => mapping(uint => Issue[])) public milestoneIssues;
 
     address public governmentOfficial;
 
@@ -160,5 +172,50 @@ contract Tender_Milestone {
         );
 
         milestones[tenderId][milestoneIndex].isApproved = true;
+    }
+
+    function reportMilestoneIssue(
+        uint tenderId,
+        uint milestoneIndex,
+        string memory shortDescription,
+        string memory imageHash,
+        string memory docHash
+    ) public {
+        // (A) Make sure the milestoneIndex is valid
+        require(
+            milestoneIndex < milestones[tenderId].length,
+            "Invalid milestone index"
+        );
+
+        // (B) Check that msg.sender is NOT the winner
+        require(
+            msg.sender != tenders[tenderId].winner,
+            "Winner cannot report issues"
+        );
+
+        // (C) Basic check that the reporter provided IPFS references
+        require(
+            bytes(imageHash).length > 0 && bytes(docHash).length > 0,
+            "Must provide one image and one document IPFS hash"
+        );
+
+        // Create the issue struct
+        Issue memory newIssue = Issue({
+            reporter: msg.sender,
+            description: shortDescription,
+            imageHash: imageHash,
+            docHash: docHash,
+            timestamp: block.timestamp
+        });
+
+        milestoneIssues[tenderId][milestoneIndex].push(newIssue);
+    }
+
+    // For retrieving the issues
+    function getMilestoneIssues(
+        uint tenderId,
+        uint milestoneIndex
+    ) public view returns (Issue[] memory) {
+        return milestoneIssues[tenderId][milestoneIndex];
     }
 }
